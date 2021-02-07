@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: baz
+  labels:
+    app: baz
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: baz
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: baz
+        version: v1
+    spec:
+      containers:
+        - name: baz
+          image: gashirar/sak-server:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: VERSION
+              value: "v1"
+#            - name: BACKEND_SERVICE
+#              value: "http://bar:8080/backend"
+            - name: DELAY_RESPONSE_MSEC
+              value: "0"
+            - name: DELAY_RESPONSE_PERCENTAGE
+              value: "0"
+            - name: RANDOM_DELAY
+              value: "0"
+            - name: FAULT_RESPONSE_PERCENTAGE
+              value: "0"

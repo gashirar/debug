@@ -6,7 +6,6 @@ metadata:
     service: baz
   name: baz
 spec:
-  type: LoadBalancer
   ports:
     - name: http
       port: 8080

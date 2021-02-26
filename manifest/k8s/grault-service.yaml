@@ -6,7 +6,6 @@ metadata:
     service: grault
   name: grault
 spec:
-  type: LoadBalancer
   ports:
     - name: http
       port: 8080

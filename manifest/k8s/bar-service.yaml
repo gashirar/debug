@@ -6,7 +6,6 @@ metadata:
     service: bar
   name: bar
 spec:
-  type: LoadBalancer
   ports:
     - name: http
       port: 8080

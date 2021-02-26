@@ -6,7 +6,6 @@ metadata:
     service: quux
   name: quux
 spec:
-  type: LoadBalancer
   ports:
     - name: http
       port: 8080

@@ -75,6 +75,7 @@ func main() {
 	router.Handle("/backend", backend())
 	router.Handle("/livenessz", livenessz())
 	router.Handle("/readinessz", readinessz())
+	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("/probe"))))
 
 	nextRequestID := func() string {
 		return fmt.Sprintf("%d", time.Now().UnixNano())

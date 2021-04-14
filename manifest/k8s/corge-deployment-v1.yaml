@@ -6,7 +6,11 @@ metadata:
     app: corge
     version: v1
 spec:
-  replicas: 1
+  replicas: 3
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0%
   selector:
     matchLabels:
       app: corge
@@ -19,11 +23,34 @@ spec:
     spec:
       containers:
         - name: corge
-          image: gashirar/sak-server:v1
-          imagePullPolicy: IfNotPresent
+          image: gashirar/sak-server:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: static/liveness.html
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: static/readiness.html
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - sleep 120
           env:
+            - name: K8S_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: VERSION
               value: "v1"
             - name: BACKEND_SERVICE

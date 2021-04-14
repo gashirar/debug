@@ -12,7 +12,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o sak-server .
 
 FROM ubuntu:18.04
 RUN apt-get update \
- && apt-get install stress curl wget net-tools vim dnsutils iputils-ping -y
+ && apt-get install stress netcat iptraf iptraf-ng iptables curl wget net-tools vim dnsutils iputils-ping -y
 
 COPY --from=0 /go/src/github.com/gashirar/sak-server/sak-server /sak-server
 RUN mkdir /probe && \

@@ -160,7 +160,7 @@ func index() http.Handler {
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.WriteHeader(http.StatusOK)
 		res["version"] = env.Version
-		res["body"] = "Hello World."
+		res["body"] = env.K8sPodName
 		s, _ := json.Marshal(res)
 		fmt.Fprintf(w, "%s", s)
 	})
@@ -212,7 +212,8 @@ func backend() http.Handler {
 		}
 		w.WriteHeader(http.StatusOK)
 		body["version"] = env.Version
-		body["body"] = backendBody
+		body["body"] = env.K8sPodName
+		body["backend"] = backendBody
 		s, _ := json.Marshal(body)
 		fmt.Fprintf(w, "%s", s)
 	})
